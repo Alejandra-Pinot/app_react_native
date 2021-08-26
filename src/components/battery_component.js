@@ -37,7 +37,9 @@ export default class BatteryComponent extends React.Component {
   render(){
       return(
           <View style={[styles.box, {flexDirection: "row" }]}>
-            <Ionicons name="md-battery-half" size={23} color="#80deea" />
+            {this.state.batteryLevel > 20 
+              ? <Ionicons name="md-battery-half" size={23} color="#80deea" /> 
+              : <Ionicons name="md-battery-half" size={23} color="red" />}
             <Text style={[s.btnPrimaryText, {marginVertical : 4, marginLeft:10}]}>Battery level: {this.state.batteryLevel}%</Text>
           </View>
       );
