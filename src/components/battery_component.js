@@ -25,7 +25,8 @@ export default class BatteryComponent extends React.Component {
     this.setState({ batteryLevel: Math.trunc(batteryLevel)});
    
     this._subscription = Battery.addBatteryLevelListener(({ batteryLevel }) => {
-      this.setState({ batteryLevel });
+      this.setState({ batteryLevel: Math.trunc(batteryLevel)});
+      console.log('batteryLevel changed!', batteryLevel);
     });
   }
 
