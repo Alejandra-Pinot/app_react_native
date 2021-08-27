@@ -104,7 +104,7 @@ export default function TakePicturePage({ navigation}) {
           </View>
 
           <View style={[{flex:1.1, flexDirection: "row"}]}>
-            <TouchableHighlight style={[s.btnTouchable,{flex:1.1}]} disabled={!previewPicture } onPress={() => navigation.navigate('DisplayPicture')}>
+            <TouchableHighlight style={[s.btnTouchable,{flex:1.1}]} disabled={!previewPicture } onPress={() => navigation.navigate('DisplayPicture', {pictureUri: pictureUri})}>
               <View style={[s.btn, !previewPicture ? s.btnSecondary: s.btnInfo, styles.buttons]}>
                 <Text style={[s.btnText, s.btnPrimaryText, styles.textbutton]}>Next</Text>
               </View>
