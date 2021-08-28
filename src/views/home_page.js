@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text,View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text,View, TouchableHighlight, } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
 
 import BatteryComponent from '../components/battery_component';
@@ -9,6 +10,30 @@ const bootstrapStyleSheet = new BootstrapStyleSheet();
 const { s, c } = bootstrapStyleSheet;
 
 export default function HomePage({ navigation}) {
+  let [selectedImage, setSelectedImage] = React.useState(null);
+
+  let openImagePickerAsync = async () => {
+    let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert('Permission to access camera roll is required!');
+      return;
+    }
+
+    let pickerResult = await ImagePicker.launchImageLibraryAsync();
+    if (pickerResult.cancelled === true) {
+      return;
+    }
+
+    setSelectedImage({ localUri: pickerResult.uri });
+  };
+
+  if (selectedImage !== null) {
+    navigation.navigate('DisplayPicture', {pictureUri: selectedImage.localUri})
+    console.log("Diferente de null");
+    
+  }
+
   return (
     <View style={[styles.container, {flexDirection: "column"}]}>
 
@@ -26,11 +51,12 @@ export default function HomePage({ navigation}) {
           </View>
         </TouchableHighlight>
         
-        <TouchableHighlight style={[s.btnTouchable,]}>
+        <TouchableHighlight style={[s.btnTouchable,]} onPress={openImagePickerAsync}>
+          {/* <Button title="Pick an image from camera roll" onPress={pickImage} /> */}
           <View style={[s.btn, s.btnInfo, styles.button]}>
             <Text style={[s.btnText, s.btnPrimaryText, styles.textbutton]}>Load picture from gallery</Text>
           </View>
-        </TouchableHighlight>   
+        </TouchableHighlight> 
       </View>
 
     </View>
