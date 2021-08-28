@@ -15,6 +15,7 @@ export default function DisplayPicturePage({route, navigation}) {
   const { pictureUri } = route.params;
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  global.isPickerPicture=false;
 
   useEffect(() => {
       getData.call();

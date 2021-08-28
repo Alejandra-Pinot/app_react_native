@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState} from 'react';
 import { StyleSheet, Text,View, TouchableHighlight, } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import BootstrapStyleSheet from 'react-native-bootstrap-styles';
@@ -10,9 +10,11 @@ const bootstrapStyleSheet = new BootstrapStyleSheet();
 const { s, c } = bootstrapStyleSheet;
 
 export default function HomePage({ navigation}) {
-  let [selectedImage, setSelectedImage] = React.useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  global.isPickerPicture=false;
 
-  let openImagePickerAsync = async () => {
+  const openImagePickerAsync = async () => {
+    global.isPickerPicture=true;
     let permissionResult = await ImagePicker.requestCameraRollPermissionsAsync();
 
     if (permissionResult.granted === false) {
@@ -22,6 +24,7 @@ export default function HomePage({ navigation}) {
 
     let pickerResult = await ImagePicker.launchImageLibraryAsync();
     if (pickerResult.cancelled === true) {
+      global.isPickerPicture=false;
       return;
     }
 
@@ -29,8 +32,8 @@ export default function HomePage({ navigation}) {
   };
 
   if (selectedImage !== null) {
+    global.isPickerPicture = false;
     navigation.navigate('DisplayPicture', {pictureUri: selectedImage.localUri})
-    console.log("Diferente de null");
     
   }
 
