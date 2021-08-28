@@ -15,6 +15,7 @@ export default function DisplayPicturePage({route, navigation}) {
   const { pictureUri } = route.params;
   const [result, setResult] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSavePicture, setIsSavePicture] = useState(false);
   global.isPickerPicture=false;
 
   useEffect(() => {
@@ -54,9 +55,11 @@ export default function DisplayPicturePage({route, navigation}) {
   }
 
   const savePicture = async ()=>{
+    setIsSavePicture(true);
     const {status} = await Permissions.askAsync(Permissions.CAMERA_ROLL)
       if (status === 'granted') {
         await MediaLibrary.createAssetAsync(pictureUri);
+        setIsSavePicture(false);
         alert("Image saved successfully");
       }
   }
@@ -72,7 +75,7 @@ export default function DisplayPicturePage({route, navigation}) {
 
       {/* Picture frame */}
       <View style={styles.pictureframe} >
-        <Image source={{ uri: pictureUri }} style={{ flex: 1 }} />
+        <Image source={{ uri: pictureUri }} style={{ flex: 1, borderWidth: 1, borderRadius: 20, borderColor: "#263238" }} />
       </View>
 
       {/* Json frame */}
@@ -89,8 +92,8 @@ export default function DisplayPicturePage({route, navigation}) {
 
       {/* Button */}
       <View style={{ flex: 1, alignItems:"center", justifyContent:"center"}} >
-        <TouchableHighlight style={[s.btnTouchable,]} onPress={ savePicture }>
-          <View style={[s.btn, s.btnInfo, styles.button]}>
+        <TouchableHighlight style={[s.btnTouchable,]} disabled={isSavePicture} onPress={ savePicture }>
+          <View style={[s.btn, isSavePicture ? s.btnSecondary: s.btnInfo, styles.button]}>
             <Text style={[s.btnText, s.btnPrimaryText, styles.textbutton]}>Save this picture from gallery</Text>
           </View>
         </TouchableHighlight>  
@@ -110,11 +113,12 @@ const styles = StyleSheet.create({
     jsonframe:{
       flex: 1.5, 
       backgroundColor: "white", 
-      marginTop: 20
+      marginTop: 20,
+      borderWidth: 1, borderRadius: 15, borderColor: "#263238"
     },
     pictureframe:{
       flex: 2.5, 
-      backgroundColor: "skyblue"
+      backgroundColor: "#263238"
     },
     button:{
         height:80, 

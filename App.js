@@ -25,19 +25,6 @@ function App() {
   const notificationListener = useRef();
   const responseListener = useRef();
 
-  // useEffect(() => {
-  //   const subscription = AppState.addEventListener("change", nextAppState => {
-  //     console.log(global.isPickerPicture);
-  //     if (nextAppState !== "active" && !global.isPickerPicture) {
-  //       console.log("MANDAR NOTIFICACIÓN");
-  //     }
-  //   });
-
-  //   return () => {
-  //     subscription.remove();
-  //   };
-  // }, []);
-
   useEffect(() => {
     //Config notifications
     registerForPushNotificationsAsync().then(token => setExpoPushToken(token));

@@ -76,10 +76,10 @@ export default function TakePicturePage({ navigation}) {
       </View>
 
       {/* Picture frame */}
-      <View style={{ flex: 3, backgroundColor: "skyblue"}} >
+      <View style={{ flex: 2.8 }} >
         {!previewPicture
-          ? <Camera style={{flex:1}} type={type} ref={(ref) => setCamera(ref)} ratio={'1:1'}/>
-          : <Image source={{ uri: pictureUri }} style={{ flex: 1 }} />
+          ? <Camera style={{flex:1, borderWidth: 1, borderRadius: 15, borderColor: "#263238"}} type={type} ref={(ref) => setCamera(ref)} ratio={'1:1'}/>
+          : <Image source={{ uri: pictureUri }} style={{ flex: 1,  borderWidth: 1, borderRadius: 15, borderColor: "#263238"}} />
         }
       </View>
 
